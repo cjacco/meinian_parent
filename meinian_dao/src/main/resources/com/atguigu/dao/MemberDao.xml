@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.dao.MemberDao">
+    <insert id="add" parameterType="com.atguigu.pojo.Member" useGeneratedKeys="true" keyProperty="id">
+        insert into t_member(fileNumber, name, sex, idCard, phoneNumber, regTime, password, email, birthday, remark)
+        values (#{fileNumber}, #{name}, #{sex}, #{idCard}, #{phoneNumber}, #{regTime}, #{password}, #{email},
+                #{birthday}, #{remark})
+    </insert>
+    <select id="getMemberByTelephone" parameterType="string" resultType="com.atguigu.pojo.Member">
+        select * from t_member where phoneNumber = #{telephone}
+    </select>
+    <select id="findMemberCountBeforeDate" parameterType="string" resultType="integer">
+        select count(*) from t_member where regTime &lt; #{value}
+    </select>
+    <select id="findTodayNewMember" parameterType="string" resultType="integer">
+        select count(*) from t_member where regTime=#{value}
+    </select>
+    <select id="findThisWeekAndThisMonthNewMember" parameterType="string" resultType="integer">
+        select count(*) from t_member where regTime &gt; #{value}
+    </select>
+
+</mapper>

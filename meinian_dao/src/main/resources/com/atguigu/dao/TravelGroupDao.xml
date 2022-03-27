@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.dao.TravelGroupDao">
+    <insert id="addTravelGroup" parameterType="com.atguigu.pojo.TravelGroup" useGeneratedKeys="true" keyProperty="id">
+        insert into t_travelgroup(code, name, helpCode, sex, remark, attention)
+        values (#{code}, #{name}, #{helpCode}, #{sex}, #{remark}, #{attention})
+    </insert>
+    <insert id="addTravelGroupAndTravelItem" parameterType="map">
+        insert into meinian.t_travelgroup_travelitem(travelgroup_id, travelitem_id)
+        values (#{travelGroupId}, #{travelItemId})
+    </insert>
+    <select id="findPage" parameterType="string" resultType="com.atguigu.pojo.TravelGroup">
+        select * from t_travelgroup
+        <where>
+            <if test="value!=null and value.length>0">
+                code =#{value} or name like "%"#{value}"%" or helpCode=#{value}
+            </if>
+        </where>
+    </select>
+    <select id="findById" parameterType="integer" resultType="com.atguigu.pojo.TravelGroup">
+        select *
+        from t_travelgroup
+        where id = #{id}
+    </select>
+    <select id="findTravelItemIdByTravelGroupId" parameterType="integer" resultType="integer">
+        select travelitem_id
+        from t_travelgroup_travelitem
+        where travelgroup_id = #{id}
+    </select>
+    <update id="edit" parameterType="com.atguigu.pojo.TravelGroup">
+        update t_travelgroup
+        <set>
+            <if test="code!=null and code.length>0">
+                code = #{code},
+            </if>
+            <if test="name!=null and name.length>0">
+                name = #{name},
+            </if>
+            <if test="helpCode!=null and helpCode.length>0">
+                helpCode = #{helpCode},
+            </if>
+            <if test="sex!=null and sex.length>0">
+                sex = #{sex},
+            </if>
+            <if test="remark!=null and remark.length>0">
+                remark = #{remark},
+            </if>
+            <if test="attention!=null and attention.length>0">
+                attention = #{attention}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteTravelGroupAndTravelItemByTravelGroupId" parameterType="integer">
+        delete
+        from meinian.t_travelgroup_travelitem
+        where travelgroup_id = #{id}
+    </delete>
+    <delete id="delete" parameterType="integer">
+        delete from t_travelgroup where id=#{id}
+    </delete>
+    <select id="findAll" resultType="com.atguigu.pojo.TravelGroup">
+        select *
+        from t_travelgroup;
+    </select>
+</mapper>

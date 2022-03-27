@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <title>Hello, World</title>
+
+</head>
+<body>
+<div id="container" style="width: 300px; height: 180px"></div>
+</body>
+<script type="text/javascript">
+    window._AMapSecurityConfig = {
+        securityJsCode:'b969f9d70e1297d377ec1129b0d8aed8',
+    }
+</script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=3a8b512bb3b4ac415c2acf2e34b1199f"></script>
+<script>
+    var map = new AMap.Map('container', {
+        zoom:11,//级别
+        center: [116.397428, 39.90923],//中心点坐标
+        viewMode:'3D', //使用3D视图
+    });
+    var marker = new AMap.Marker({
+        position: new AMap.LngLat(116.39, 39.9),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        title: '111111111111111',
+        draggable: true,
+        content: "nihao"
+    });
+    marker.on('click', ()=>{
+        alert(marker.getPosition())
+    })
+
+    // 将创建的点标记添加到已有的地图实例：
+    map.add(marker);
+</script>
+</html>

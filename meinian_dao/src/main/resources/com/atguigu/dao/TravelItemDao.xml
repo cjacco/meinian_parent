@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.dao.TravelItemDao">
+    <insert id="add" parameterType="com.atguigu.pojo.TravelItem">
+        insert into t_travelitem(code, name, sex, age, price, type, remark, attention)
+        values (#{code}, #{name}, #{sex}, #{age}, #{price}, #{type}, #{remark}, #{attention})
+    </insert>
+    <select id="findPage" parameterType="string" resultType="com.atguigu.pojo.TravelItem">
+        select * from t_travelitem
+        <where>
+            <if test="value!=null and value.length>0">
+                name like "%"#{value}"%" or code=#{value}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteById" parameterType="integer">
+        delete
+        from t_travelitem
+        where id = #{id}
+    </delete>
+    <select id="findById" parameterType="integer" resultType="com.atguigu.pojo.TravelItem">
+        select *
+        from t_travelitem
+        where id = #{id}
+    </select>
+    <update id="edit" parameterType="com.atguigu.pojo.TravelItem">
+        update t_travelitem
+        <set>
+            <if test="code!=null and code.length>0">
+                code=#{code},
+            </if>
+            <if test="name!=null and name.length>0">
+                name=#{name},
+            </if>
+            <if test="sex!=null and sex.length>0">
+                sex=#{sex},
+            </if>
+            <if test="age!=null and age.length>0">
+                age=#{age},
+            </if>
+            <if test="price!=null">
+                price=#{price},
+            </if>
+            <if test="type!=null and type.length>0">
+                type=#{type},
+            </if>
+            <if test="remark!=null and remark.length>0">
+                remark=#{remark},
+            </if>
+            <if test="attention!=null and attention.length>0">
+                attention=#{attention}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <select id="findAll" resultType="com.atguigu.pojo.TravelItem">
+        select * from t_travelitem;
+    </select>
+</mapper>
